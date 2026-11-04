@@ -1,0 +1,29 @@
+# Host-networking override for this VM: the daemon runs with bridge=none and
+# iptables disabled (the sandbox forbids NAT chain creation), so every service
+# shares the host network and reaches the others through 127.0.0.1 under their
+# compose service names (extra_hosts). Ports bind exactly where the upstream
+# file expects them: postgres 5432, switch 8000 (+callback 8081),
+# gateway 3000, mattermost 8065.
+x-hostnet: &hostnet
+  network_mode: host
+  ports: !reset []
+  extra_hosts: &hostaliases
+    - "postgres:127.0.0.1"
+    - "mattermost:127.0.0.1"
+    - "switch:127.0.0.1"
+    - "gateway:127.0.0.1"
+    - "host.docker.internal:127.0.0.1"
+
+services:
+  postgres:
+    <<: *hostnet
+  init-db:
+    <<: *hostnet
+  mattermost:
+    <<: *hostnet
+  switch:
+    <<: *hostnet
+  gateway:
+    <<: *hostnet
+  setup:
+    <<: *hostnet
