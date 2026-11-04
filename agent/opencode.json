@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "switchshim": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Switch Shim (OpenRouter free tier)",
+      "options": { "baseURL": "http://127.0.0.1:8399/v1", "apiKey": "shim-local" },
+      "models": { "switch-free-agent": { "name": "Switch Free Agent" } }
+    }
+  },
+  "model": "switchshim/switch-free-agent",
+  "permission": { "edit": "allow", "bash": "allow", "webfetch": "deny" }
+}
